@@ -4,7 +4,7 @@ import {
   BuscarContenidoEditorDTO,
   ActualizarContenidoEditorDTO,
 } from "../dto";
-import * as repository from "../repository";
+import * as repository from "../repository/mongodb";
 import { EliminarContenidoEditorDTO } from "../dto";
 
 export const crear = async (

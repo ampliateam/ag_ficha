@@ -3,7 +3,7 @@ import {
   CrearFichaDTO,
   ActualizarFichaDTO,
   BuscarFichaDTO,
-} from "../dto";
+} from "../../dto";
 import { FichaModel } from "@domain/_connections/mongodb";
 import { mongoToFicha } from "@domain/_helpers";
 

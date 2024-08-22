@@ -3,7 +3,7 @@ import {
   ActualizarContenidoEditorDTO,
   BuscarContenidoEditorDTO,
   CrearContenidoEditorDTO,
-} from "../dto";
+} from "../../dto";
 import { ContenidoEditorModel } from "@domain/_connections/mongodb";
 import { mongoToContenidoEditor } from "@domain/_helpers";
 
