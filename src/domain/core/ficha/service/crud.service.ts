@@ -23,7 +23,3 @@ export const actualizar = async (
 ): Promise<IFicha> => {
   return await repository.crud.actualizar(dto);
 };
-
-export const eliminar = async (dto: BuscarFichaDTO): Promise<IFicha> => {
-  return await repository.crud.eliminar(dto);
-}

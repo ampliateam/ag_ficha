@@ -1,7 +1,7 @@
 import { TFichaEstado } from '../types/ficha.type';
 
 export interface IContenidoEditor {
-  id: string;
+  _id: string;
   idUsuarioProfesional: string;
   idProfesional: string;
   idCliente: string;
@@ -12,7 +12,7 @@ export interface IContenidoEditor {
 }
 
 export interface IContenidoEditorOpcional {
-  id?: string;
+  _id?: string;
   idUsuarioProfesional?: string;
   idProfesional?: string;
   idCliente?: string;

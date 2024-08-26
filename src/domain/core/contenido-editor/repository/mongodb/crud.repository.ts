@@ -11,7 +11,7 @@ export const crear = async (
   dto: CrearContenidoEditorDTO
 ): Promise<IContenidoEditor> => {
   const modelMongoDB = await ContenidoEditorModel.create(dto.contenidoEditor);
-  return await obtener({ id: modelMongoDB.id });
+  return await obtener({ _id: modelMongoDB._id.toString() });
 };
 
 export const obtener = async (
@@ -19,8 +19,8 @@ export const obtener = async (
 ): Promise<IContenidoEditor> => {
   // Proceso de filtracion
   const filtros: any = {};
-  if (dto.id) {
-    filtros._id = dto.id;
+  if (dto._id) {
+    filtros._id = dto._id;
   } else if (dto.porUsuarioProfesionayCliente) {
     filtros.idUsuarioProfesional = dto.porUsuarioProfesionayCliente.idUsuarioProfesional;
     filtros.idCliente = dto.porUsuarioProfesionayCliente.idCliente;
@@ -47,7 +47,7 @@ export const actualizar = async (
 
   await ContenidoEditorModel.updateOne(
     {
-      _id: contenidoEditor.id,
+      _id: contenidoEditor._id,
     },
     dto.actualizado
   );

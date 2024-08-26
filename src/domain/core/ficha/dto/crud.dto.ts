@@ -5,7 +5,7 @@ export interface CrearFichaDTO {
 }
 
 export interface BuscarFichaDTO {
-  id?: string;
+  _id?: string;
   porUsuarioProfesionayCliente?: {
     idUsuarioProfesional: string;
     idCliente: string;
