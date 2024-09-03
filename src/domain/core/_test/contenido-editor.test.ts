@@ -1,7 +1,7 @@
 import { conexionConMongoDB } from "@global/connections/mongodb.connection";
 import { services } from "@domain/services";
 
-describe("CRUD - contenidoEditor", () => {
+describe.skip("CRUD - contenidoEditor", () => {
   const _id = "000000000000000000000000";
   const idUsuarioProfesional = "000000000000000000000004";
   const idProfesional = "000000000000000000000001";

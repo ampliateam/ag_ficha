@@ -18,6 +18,16 @@ const ContenidoEditorSchema = new Schema(
   }, { versionKey: false }
 );
 
+// Crear un índice único compuesto
+ContenidoEditorSchema.index({
+  idProfesional: 1,
+  idCliente: 1,
+  estado: 1,
+}, {
+  unique: true,
+  partialFilterExpression: { estado: { $in: ['habilitado', 'deshabilitado'] } }
+});
+
 ContenidoEditorSchema.pre("findOneAndDelete", (next, opts) => {
   try {
     opts.next();

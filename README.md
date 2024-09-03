@@ -8,5 +8,5 @@ DOCKER_IMAGE=ag_ficha_local
 DOCKER_PORT_EXTERNO=7005
 DOCKER_PORT_INTERNO=8080
 ENVIRONMENT=personal
-MONGO_URI=mongodb://admin:password@127.0.0.1:27021/ag_ficha?authSource=admin
+MONGO_URI=mongodb://admin:password@127.0.0.1:27017/ag_ficha?authSource=admin
 ```
