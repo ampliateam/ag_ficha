@@ -2,7 +2,7 @@ import { TFichaEstado, TTipoFicha } from "../types/ficha.type";
 import { IFichaOdontologica } from "./ficha-odontologica.interface";
 
 export interface IFicha {
-  id: string;
+  _id: string;
   idUsuarioProfesional: string;
   idProfesional: string;
   idCliente: string;
@@ -14,7 +14,7 @@ export interface IFicha {
 }
 
 export interface IFichaOpcional {
-  id?: string;
+  _id?: string;
   idUsuarioProfesional?: string;
   idProfesional?: string;
   idCliente?: string;

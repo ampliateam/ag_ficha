@@ -6,6 +6,7 @@ const constantes = {
     parametroSistema: "ParametrosSistema",
     ficha: "Fichas",
     contenidoEditor: "ContenidoEditor",
+    configFichaProfesional: "ConfigFichaProfesional"
   },
   parametroBusqueda: {
     baseUrlAgUsuario: "base_url_ag_usuario",

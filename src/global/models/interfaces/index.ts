@@ -6,3 +6,4 @@ export * from './ficha.interface';
 export * from './servicio-profesional.interface';
 export * from './ficha.interface'
 export * from './contenido-editor.interface'
+export * from './config-ficha-profesional.interface'

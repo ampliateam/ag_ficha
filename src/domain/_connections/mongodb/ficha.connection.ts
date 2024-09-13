@@ -1,4 +1,4 @@
-import { Schema, Types, model } from "mongoose";
+import { Schema, model } from "mongoose";
 import { constants } from "@global/configs/constants";
 
 // Guardar el valor por defecto de cada campo aqui
@@ -14,19 +14,17 @@ const FichaSchema = new Schema(
     fechaCreacion: { type: Date, required: true },
     fechaEliminacion: { type: Date, required: false },
   },
-  {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
-    versionKey: false,
-  }
+  { versionKey: false }
 );
 
-// Duplicate the ID field.
-FichaSchema.virtual("id").set(function (v: string) {
-  this._id = new Types.ObjectId(v);
-});
-FichaSchema.virtual("id").get(function () {
-  return this._id.toHexString();
+// Crear un índice único compuesto
+FichaSchema.index({
+  idProfesional: 1,
+  idCliente: 1,
+  estado: 1,
+}, {
+  unique: true,
+  partialFilterExpression: { estado: { $in: ['habilitado', 'deshabilitado'] } }
 });
 
 export const FichaModel = model(constants.nombreStore.ficha, FichaSchema);

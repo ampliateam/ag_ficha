@@ -2,34 +2,20 @@ import { conexionConMongoDB } from "@global/connections/mongodb.connection";
 import { services } from "@domain/services";
 
 describe("CRUD - Agenda", () => {
+  const _id = "000000000000000000000000";
   const idUsuarioProfesional = "123456";
   const idProfesional = "000000000000000000000001";
-  const id = "000000000000000000000000";
   const idCliente = "000000000000000000000001";
 
   beforeAll(async () => {
     await conexionConMongoDB();
+  });
 
-    // Eliminamos los usuarios de prueba
-    const fichaExistente = await services.core.ficha.crud.obtener({
-      porUsuarioProfesionayCliente: {
-        idUsuarioProfesional,
-        idCliente,
-      },
-    });
-    if (fichaExistente) {
-      await services.core.ficha.crud.eliminar({
-        porUsuarioProfesionayCliente: {
-          idUsuarioProfesional,
-          idCliente,
-        },
-      });
-    }
-
+  test('Crear - Ficha', async () => {
     // Crear un ficha
     const fichaNuevo = await services.core.ficha.crud.crear({
       ficha: {
-        id,
+        _id,
         idUsuarioProfesional,
         idProfesional,
         idCliente,
@@ -47,7 +33,7 @@ describe("CRUD - Agenda", () => {
       },
     });
 
-    expect(fichaNuevo.id).toEqual(id);
+    expect(fichaNuevo._id).toEqual(_id);
   });
 
   test("Obtener ficha", async () => {
@@ -59,12 +45,13 @@ describe("CRUD - Agenda", () => {
       },
     });
 
-    expect(ficha.id).toEqual(id);
+    expect(ficha._id).toEqual(_id);
   });
+
   test("Actualizar ficha", async () => {
     // Obtener ficha
     const ficha = await services.core.ficha.crud.actualizar({
-      buscarPor: { id },
+      buscarPor: { _id },
       actualizado: {
         datosFicha: {
           datosPaciente: undefined,
@@ -76,6 +63,6 @@ describe("CRUD - Agenda", () => {
       },
     });
 
-    expect(ficha.id).toEqual(id);
+    expect(ficha._id).toEqual(_id);
   });
 });

@@ -4,8 +4,7 @@ import {
   BuscarContenidoEditorDTO,
   ActualizarContenidoEditorDTO,
 } from "../dto";
-import * as repository from "../repository";
-import { EliminarContenidoEditorDTO } from "../dto";
+import * as repository from "../repository/mongodb";
 
 export const crear = async (
   dto: CrearContenidoEditorDTO
@@ -24,13 +23,3 @@ export const actualizar = async (
 ): Promise<IContenidoEditor> => {
   return await repository.crud.actualizar(dto);
 };
-
-export const eliminarLogicamente = async (dto: EliminarContenidoEditorDTO): Promise<IContenidoEditor> => {
-    return await repository.crud.actualizar({
-        buscarPor: dto.buscarPor,
-        actualizado: {
-            estado: 'eliminado',
-            fechaEliminacion: dto.fechaEliminacion,
-        },
-    });
-}
