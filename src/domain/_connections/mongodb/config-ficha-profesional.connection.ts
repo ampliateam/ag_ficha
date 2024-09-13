@@ -1,8 +1,7 @@
 import { Schema, model } from "mongoose";
 import { constants } from "@global/configs/constants";
 
-// // Guardar el valor por defecto de cada campo aqui
-
+// Guardar el valor por defecto de cada campo aqui
 const ConfigFichaProfesionalSchema = new Schema(
   {
     idUsuarioProfesional: { type: String, required: true },
