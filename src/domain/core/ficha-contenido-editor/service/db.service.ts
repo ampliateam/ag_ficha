@@ -1,11 +1,11 @@
-import { IContenidoEditor } from "@global/models/interfaces";
-import * as repository from "../repository/mongodb";
+import { IFichaContenidoEditor } from '@global/models/interfaces';
+import * as repository from '../repository/mongodb';
 
-export const obtener = async (dto: any): Promise<IContenidoEditor[]> => {
+export const obtener = async (dto: any): Promise<IFichaContenidoEditor[]> => {
   return await repository.db.obtener(dto);
 };
 
-export const actualizar = async (dto: any, data: any): Promise<IContenidoEditor[]> => {
+export const actualizar = async (dto: any, data: any): Promise<IFichaContenidoEditor[]> => {
   const actualizados = await repository.db.actualizar(dto, data);
   return actualizados;
 };

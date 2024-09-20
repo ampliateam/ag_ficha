@@ -1,52 +1,56 @@
-import { conexionConMongoDB } from "@global/connections/mongodb.connection";
-import { services } from "@domain/services";
+import { conexionConMongoDB } from '@global/connections/mongodb.connection';
+import { services } from '@domain/services';
 
-describe.skip("CRUD - configFichaProfesional", () => {
-  const _id = "000000000000000000000000";
-  const idUsuarioProfesional = "000000000000000000000004";
-  const idProfesional = "000000000000000000000001";
+describe('CRUD - configFichaProfesional', () => {
+  const ids = [
+    '66eda55ecd908886150187bf',
+    '66eda572b95745c49a75cda0',
+    '66eda5aab4038a35cf09d67f',
+  ];
 
   beforeAll(async () => {
     await conexionConMongoDB();
   });
 
-  test.skip('Crear - ConfigFichaProfesional', async () => {
-    // Creamos un nuevo servicio de agenda
-    const configFichaProfesionalNuevo = await services.core.configFichaProfesional.crud.crear(
-      {
-        configFichaProfesional: {
-          _id,
-          fechaCreacion: new Date(),
-          idUsuarioProfesional,
-          idProfesional,
-          contenido: ['osdiwiufwfieifiwefwfnj'],
-        },
-      }
-    );
-    console.log('configFichaProfesionalNuevo',configFichaProfesionalNuevo)
-    expect(configFichaProfesionalNuevo._id).toEqual(_id);
-  });
-
-  test.skip("Obtener configFichaProfesional", async () => {
-    // Obtenemos el servicio de un agenda
-    const configFichaProfesional = await services.core.configFichaProfesional.crud.obtener({
-      _id,
+  test.skip('Crear', async () => {
+    const objNuevo = await services.core.configFichaProfesional.crud.crear({
+      configFichaProfesional: {
+        idProfesional: 'profesional-000000000002',
+        listaFormularioHabilitado: ['datos-cliente'],
+        fechaCreacion: new Date(),
+      },
     });
 
-    expect(configFichaProfesional._id).toEqual(_id);
+    expect(objNuevo).toBeTruthy();
   });
 
-  test.skip("Actualizar configFichaProfesional", async () => {
-    // Obtenemos el servicio de un agenda
-    const configFichaProfesional = await services.core.configFichaProfesional.crud.actualizar(
-      {
-        buscarPor: { _id },
-        actualizado: {
-          contenido: ['panchooo'],
-        },
-      }
-    );
+  test.skip('Obtener', async () => {
+    const [
+      dataCrud,
+      [dataDb],
+      listaDb,
+    ] = await Promise.all([
+      services.core.configFichaProfesional.crud.obtener({ _id: ids[0] }),
+      services.core.configFichaProfesional.db.obtener({ _id: ids[1] }),
+      services.core.configFichaProfesional.db.obtener({ _id: { '$in': ids } }),
+    ]);
 
-    expect(configFichaProfesional._id).toEqual(_id);
+    expect(dataCrud._id).toEqual(ids[0]);
+    expect(dataDb._id).toEqual(ids[1]);
+    listaDb.map(obj => {
+      expect(ids).toContain(obj._id);
+    });
+  });
+
+  test.skip('Actualizar', async () => {
+    const objActualizado = await services.core.configFichaProfesional.crud.actualizar({
+      buscarPor: { _id: ids[0] },
+      actualizado: {
+        listaFormularioHabilitado: ['datos-cliente', 'odontograma'],
+      },
+    });
+
+    expect(objActualizado._id).toEqual(ids[0]);
+    expect(objActualizado.listaFormularioHabilitado).toContain('odontograma');
   });
 });

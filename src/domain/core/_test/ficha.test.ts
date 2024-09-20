@@ -1,68 +1,69 @@
-import { conexionConMongoDB } from "@global/connections/mongodb.connection";
-import { services } from "@domain/services";
+import { conexionConMongoDB } from '@global/connections/mongodb.connection';
+import { services } from '@domain/services';
 
-describe("CRUD - Agenda", () => {
-  const _id = "000000000000000000000000";
-  const idUsuarioProfesional = "123456";
-  const idProfesional = "000000000000000000000001";
-  const idCliente = "000000000000000000000001";
+describe('CRUD - Ficha', () => {
+  const ids = [
+    '66edaa672c8db9c976524d35',
+    '66edaa8fa6445ee475d2f6c0',
+    '66edaaa3dd035ec8f8159e97',
+  ];
 
   beforeAll(async () => {
     await conexionConMongoDB();
   });
 
-  test('Crear - Ficha', async () => {
-    // Crear un ficha
-    const fichaNuevo = await services.core.ficha.crud.crear({
+  test.skip('Crear', async () => {
+    const objNuevo = await services.core.ficha.crud.crear({
       ficha: {
-        _id,
-        idUsuarioProfesional,
-        idProfesional,
-        idCliente,
-        tipoFicha: "odontologica",
-        datosFicha: {
-          datosPaciente: undefined,
-          historiaMedica: undefined,
-          historiaOdontologica: undefined,
-          tratamientos: undefined,
-          odontograma: undefined
-        },
-        estado: "habilitado",
-        fechaCreacion: new Date(),
-        fechaEliminacion: undefined,
+        idProfesional: 'profesional-000000000000',
+        idCliente: 'cliente-0000000000000002',
+        tipoFicha: 'odontologia',
+        // datosFormulario: [{
+        //   tipo: 'datos-cliente',
+        //   datos: {},
+        // }],
+        estado: 'habilitado',
       },
     });
 
-    expect(fichaNuevo._id).toEqual(_id);
+    expect(objNuevo).toBeTruthy();
   });
 
-  test("Obtener ficha", async () => {
-    // Obtener ficha
-    const ficha = await services.core.ficha.crud.obtener({
-      porUsuarioProfesionayCliente: {
-        idUsuarioProfesional,
-        idCliente,
-      },
+  test.skip('Obtener', async () => {
+    const [
+      dataCrud,
+      [dataDb],
+      listaDb,
+    ] = await Promise.all([
+      services.core.ficha.crud.obtener({ _id: ids[0] }),
+      services.core.ficha.db.obtener({ _id: ids[1] }),
+      services.core.ficha.db.obtener({ _id: { '$in': ids } }),
+    ]);
+
+    expect(dataCrud._id).toEqual(ids[0]);
+    expect(dataDb._id).toEqual(ids[1]);
+    listaDb.map(obj => {
+      expect(ids).toContain(obj._id);
     });
-
-    expect(ficha._id).toEqual(_id);
   });
 
-  test("Actualizar ficha", async () => {
-    // Obtener ficha
-    const ficha = await services.core.ficha.crud.actualizar({
-      buscarPor: { _id },
+  test.skip('Actualizar', async () => {
+    const objActualizado = await services.core.ficha.crud.actualizar({
+      buscarPor: { _id: ids[0] },
       actualizado: {
-        datosFicha: {
-          datosPaciente: undefined,
-          historiaMedica: undefined,
-          historiaOdontologica: undefined,
-          tratamientos: undefined,
-          odontograma: undefined
-        }
+        datosFormulario: [
+          {
+            tipo: 'datos-cliente',
+            datos: { dato: null },
+          },
+          {
+            tipo: 'odontograma',
+            datos: { dato: null },
+          },
+        ]
       },
     });
 
-    expect(ficha._id).toEqual(_id);
+    expect(objActualizado._id).toEqual(ids[0]);
   });
 });

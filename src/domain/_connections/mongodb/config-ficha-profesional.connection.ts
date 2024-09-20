@@ -1,25 +1,25 @@
-import { Schema, model } from "mongoose";
-import { constants } from "@global/configs/constants";
+import { Schema, model, Document } from 'mongoose';
+import { constants } from '@global/configs/constants';
+import { IConfigFichaProfesional } from '@global/models/interfaces';
+import { TFichaDatosFormularioTipo } from '@global/models/types';
 
-// Guardar el valor por defecto de cada campo aqui
-const ConfigFichaProfesionalSchema = new Schema(
-  {
-    idUsuarioProfesional: { type: String, required: true },
-    idProfesional: { type: String, required: true, unique: true },
-    contenido: { type: Array, required: true },
-    fechaCreacion: { type: Date, required: true },
-  }, { versionKey: false }
-);
+// Definir la interfaz para el documento
+interface IConfigFichaProfesionalMongoose extends Document, Omit<IConfigFichaProfesional, '_id'> {};
 
-ConfigFichaProfesionalSchema.pre("findOneAndDelete", (next, opts) => {
-  try {
-    opts.next();
-  } catch (error) {
-    next(error);
-  }
-});
+// Guardar el valor por defecto de cada campo aqui (para los required=false)
+const dv = {
+  listaFormularioHabilitado: ['datos-cliente'] as TFichaDatosFormularioTipo[],
+  fechaCreacion: Date.now,
+};
 
-export const ConfigFichaProfesionalModel = model(
+// Schema de mongoose
+const ConfigFichaProfesionalSchema = new Schema<IConfigFichaProfesionalMongoose>({
+  idProfesional: { type: String, required: true, unique: true },
+  listaFormularioHabilitado: { type: [String], required: false, default: dv.listaFormularioHabilitado },
+  fechaCreacion: { type: Date, required: false, default: dv.fechaCreacion },
+}, { versionKey: false });
+
+export const ConfigFichaProfesionalModel = model<IConfigFichaProfesionalMongoose>(
   constants.nombreStore.configFichaProfesional,
   ConfigFichaProfesionalSchema
 );

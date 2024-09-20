@@ -1,26 +1,25 @@
-import { TFichaEstado, TTipoFicha } from "../types/ficha.type";
-import { IFichaOdontologica } from "./ficha-odontologica.interface";
+import {
+  TFichaEstado,
+  TTipoFicha,
+  TDatosFormulario
+} from '../types';
 
 export interface IFicha {
   _id: string;
-  idUsuarioProfesional: string;
   idProfesional: string;
   idCliente: string;
   tipoFicha: TTipoFicha;
-  datosFicha: IFichaOdontologica; // | IFichaPsicologica
+  datosFormulario: TDatosFormulario[];
   estado: TFichaEstado;
   fechaCreacion: Date;
-  fechaEliminacion: Date | null;
-}
+};
 
 export interface IFichaOpcional {
   _id?: string;
-  idUsuarioProfesional?: string;
   idProfesional?: string;
   idCliente?: string;
   tipoFicha?: TTipoFicha;
-  datosFicha?: IFichaOdontologica; // | IFichaPsicologica
+  datosFormulario?: TDatosFormulario[];
   estado?: TFichaEstado;
   fechaCreacion?: Date;
-  fechaEliminacion?: Date | null;
-}
+};

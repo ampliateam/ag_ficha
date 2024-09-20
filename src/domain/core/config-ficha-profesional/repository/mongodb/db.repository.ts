@@ -1,7 +1,7 @@
-import { ConfigFichaProfesionalModel } from "@domain/_connections/mongodb";
-import { mongoToConfigFichaProfesional } from "@domain/_helpers";
+import { ConfigFichaProfesionalModel } from '@domain/_connections/mongodb';
+import { mongoToConfigFichaProfesional } from '@domain/_helpers';
 
-// Tener cuidado mientras se use el plan de mongodb "pago-por-uso"
+// Tener cuidado mientras se use el plan de mongodb 'pago-por-uso'
 export const obtener = async (filtros: any) => {
   const listaModelMongo = await ConfigFichaProfesionalModel.find(filtros);
   return listaModelMongo.map(v => mongoToConfigFichaProfesional(v));

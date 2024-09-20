@@ -1,25 +1,19 @@
-import { IFicha } from "@global/models/interfaces";
+import { IFicha } from '@global/models/interfaces';
 import {
   CrearFichaDTO,
   BuscarFichaDTO,
   ActualizarFichaDTO,
-} from "../dto";
-import * as repository from "../repository/mongodb";
+} from '../dto';
+import * as repository from '../repository/mongodb';
 
-export const crear = async (
-  dto: CrearFichaDTO
-): Promise<IFicha> => {
+export const crear = async (dto: CrearFichaDTO): Promise<IFicha> => {
   return await repository.crud.crear(dto);
 };
 
-export const obtener = async (
-  dto: BuscarFichaDTO
-): Promise<IFicha> => {
+export const obtener = async (dto: BuscarFichaDTO): Promise<IFicha> => {
   return await repository.crud.obtener(dto);
 };
 
-export const actualizar = async (
-  dto: ActualizarFichaDTO
-): Promise<IFicha> => {
+export const actualizar = async (dto: ActualizarFichaDTO): Promise<IFicha> => {
   return await repository.crud.actualizar(dto);
 };

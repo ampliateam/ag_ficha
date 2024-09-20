@@ -1,22 +1,19 @@
-import { IFicha, IFichaOpcional } from "@global/models/interfaces";
+import { IFichaOpcional } from '@global/models/interfaces';
 
 export interface CrearFichaDTO {
-  ficha: IFicha;
-}
+  ficha: IFichaOpcional;
+};
 
 export interface BuscarFichaDTO {
   _id?: string;
-  porUsuarioProfesionayCliente?: {
-    idUsuarioProfesional: string;
-    idCliente: string;
-  };
+  idCliente?: string;
   porProfesionalyCliente?: {
     idProfesional: string;
     idCliente: string;
   };
-}
+};
 
 export interface ActualizarFichaDTO {
   buscarPor: BuscarFichaDTO;
   actualizado: IFichaOpcional;
-}
+};
