@@ -1,12 +1,11 @@
-import { IConfigFichaProfesional, IConfigFichaProfesionalOpcional } from "@global/models/interfaces";
+import { IConfigFichaProfesionalOpcional } from '@global/models/interfaces';
 
 export interface CrearConfigFichaProfesionalDTO {
-  configFichaProfesional: IConfigFichaProfesional;
+  configFichaProfesional: IConfigFichaProfesionalOpcional;
 }
 
 export interface BuscarConfigFichaProfesionalDTO {
   _id?: string;
-  idUsuarioProfesional?: string;
   idProfesional?: string;
 }
 

@@ -1,5 +1,5 @@
-import { IFicha, IContenidoEditor, IConfigFichaProfesional } from "@global/models/interfaces";
-import { IParametroSistema } from "@domain/_models/interfaces";
+import { IFicha, IFichaContenidoEditor, IConfigFichaProfesional } from '@global/models/interfaces';
+import { IParametroSistema } from '@domain/_models/interfaces';
 
 const mongoToModel = (mongo: any) => {
   if (!mongo) return null;
@@ -22,8 +22,8 @@ export const mongoToFicha = (mongo: any): IFicha => {
   return mongoToModel(mongo) as IFicha;
 };
 
-export const mongoToContenidoEditor = (mongo: any): IContenidoEditor => {
-  return mongoToModel(mongo) as IContenidoEditor;
+export const mongoToFichaContenidoEditor = (mongo: any): IFichaContenidoEditor => {
+  return mongoToModel(mongo) as IFichaContenidoEditor;
 };
 
 export const mongoToConfigFichaProfesional = (mongo: any): IConfigFichaProfesional => {
