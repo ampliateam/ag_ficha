@@ -6,16 +6,24 @@ import {
 } from '../../dto';
 import { ConfigFichaProfesionalModel } from '@domain/_connections/mongodb';
 import { mongoToConfigFichaProfesional } from '@domain/_helpers';
+import { manejadorDeErrorMongodb } from '@domain/_errors';
+
+// Referenciar el manejador de error correspondiente
+const manejadorDeError = manejadorDeErrorMongodb;
 
 const filtroParaObtenerUnRegistro = (buscarPor: BuscarConfigFichaProfesionalDTO) => {
-  const filtros: any = {};
-  if (buscarPor._id) {
-    filtros._id = buscarPor._id;
-  } else if (buscarPor.idProfesional) {
-    filtros.idProfesional = buscarPor.idProfesional;
-  } else return null;
+  try {
+    const filtros: any = {};
+    if (buscarPor._id) {
+      filtros._id = buscarPor._id;
+    } else if (buscarPor.idProfesional) {
+      filtros.idProfesional = buscarPor.idProfesional;
+    } else return null;
 
-  return filtros;
+    return filtros;
+  } catch (error) {
+    return manejadorDeError(error);
+  }
 };
 
 export const crear = async (dto: CrearConfigFichaProfesionalDTO): Promise<IConfigFichaProfesional> => {
@@ -24,27 +32,35 @@ export const crear = async (dto: CrearConfigFichaProfesionalDTO): Promise<IConfi
 };
 
 export const obtener = async (dto: BuscarConfigFichaProfesionalDTO): Promise<IConfigFichaProfesional> => {
-  // Proceso de filtracion
-  const filtros = filtroParaObtenerUnRegistro(dto);
-  if (!filtros) return null;
+  try {
+    // Proceso de filtracion
+    const filtros = filtroParaObtenerUnRegistro(dto);
+    if (!filtros) return null;
 
-  const modelMongoDB = await ConfigFichaProfesionalModel.findOne(filtros);
-  if (!modelMongoDB) return null;
+    const modelMongoDB = await ConfigFichaProfesionalModel.findOne(filtros);
+    if (!modelMongoDB) return null;
 
-  return mongoToConfigFichaProfesional(modelMongoDB);
+    return mongoToConfigFichaProfesional(modelMongoDB);
+  } catch (error) {
+    return manejadorDeError(error)
+  }
 };
 
 export const actualizar = async (dto: ActualizarConfigFichaProfesionalDTO): Promise<IConfigFichaProfesional> => {
-  // Proceso de filtracion
-  const filtros = filtroParaObtenerUnRegistro(dto.buscarPor);
-  if (!filtros) return null;
+  try {
+    // Proceso de filtracion
+    const filtros = filtroParaObtenerUnRegistro(dto.buscarPor);
+    if (!filtros) return null;
 
-  const obj = await ConfigFichaProfesionalModel.findOneAndUpdate(
-    filtros,
-    dto.actualizado,
-    { new: true }
-  );
-  if (!obj) return null;
+    const obj = await ConfigFichaProfesionalModel.findOneAndUpdate(
+      filtros,
+      dto.actualizado,
+      { new: true }
+    );
+    if (!obj) return null;
 
-  return mongoToConfigFichaProfesional(obj);
+    return mongoToConfigFichaProfesional(obj);
+  } catch (error) {
+    return manejadorDeError(error)
+  }
 };
