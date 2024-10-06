@@ -1,5 +1,4 @@
-import { IFicha, IFichaContenidoEditor, IConfigFichaProfesional } from '@global/models/interfaces';
-import { IParametroSistema } from '@domain/_models/interfaces';
+import { IFicha, IFichaContenidoEditor, IConfigFichaProfesional, IParametroSistema } from '@global/models/ag_ficha';
 
 const mongoToModel = (mongo: any) => {
   if (!mongo) return null;

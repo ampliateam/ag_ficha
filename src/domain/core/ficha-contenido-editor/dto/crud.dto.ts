@@ -1,4 +1,4 @@
-import { IFichaContenidoEditorOpcional } from '@global/models/interfaces';
+import { IFichaContenidoEditorOpcional } from '@global/models/ag_ficha';
 
 export interface CrearFichaContenidoEditorDTO {
   fichaContenidoEditor: IFichaContenidoEditorOpcional;

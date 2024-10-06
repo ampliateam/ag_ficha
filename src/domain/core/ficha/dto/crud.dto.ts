@@ -1,4 +1,4 @@
-import { IFichaOpcional } from '@global/models/interfaces';
+import { IFichaOpcional } from '@global/models/ag_ficha';
 
 export interface CrearFichaDTO {
   ficha: IFichaOpcional;

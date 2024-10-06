@@ -1,6 +1,6 @@
 import { Schema, model, Document } from 'mongoose';
 import { constants } from '@global/configs/constants';
-import { IFichaContenidoEditor } from '@global/models/interfaces';
+import { IFichaContenidoEditor } from '@global/models/ag_ficha';
 
 // Definir la interfaz para el documento
 interface IFichaContenidoEditorMongoose extends Document, Omit<IFichaContenidoEditor, '_id'> {};

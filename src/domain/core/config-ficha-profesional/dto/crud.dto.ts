@@ -1,4 +1,4 @@
-import { IConfigFichaProfesionalOpcional } from '@global/models/interfaces';
+import { IConfigFichaProfesionalOpcional } from '@global/models/ag_ficha';
 
 export interface CrearConfigFichaProfesionalDTO {
   configFichaProfesional: IConfigFichaProfesionalOpcional;

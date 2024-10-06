@@ -1,6 +1,6 @@
 import { constants } from '@global/configs/constants';
-import { ErrorCapaGlobal } from '@global/models/classes';
-import { IErrorCapaGlobalOpcional } from '@global/models/interfaces';
+import { ErrorCapaGlobal } from '@global/models/_system';
+import { IErrorCapaGlobalOpcional } from '@global/models/ag_ficha';
 
 export const generarErrorCapaDomain = (error: IErrorCapaGlobalOpcional): ErrorCapaGlobal => {
   return new ErrorCapaGlobal({

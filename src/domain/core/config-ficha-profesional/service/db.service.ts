@@ -1,4 +1,4 @@
-import { IConfigFichaProfesional } from '@global/models/interfaces';
+import { IConfigFichaProfesional } from '@global/models/ag_ficha';
 import * as repository from '../repository/mongodb';
 
 export const obtener = async (dto: any): Promise<IConfigFichaProfesional[]> => {

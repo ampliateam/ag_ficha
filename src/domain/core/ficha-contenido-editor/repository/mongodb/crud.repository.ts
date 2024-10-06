@@ -1,4 +1,4 @@
-import { IFichaContenidoEditor } from '@global/models/interfaces';
+import { IFichaContenidoEditor } from '@global/models/ag_ficha';
 import {
   ActualizarFichaContenidoEditorDTO,
   BuscarFichaContenidoEditorDTO,

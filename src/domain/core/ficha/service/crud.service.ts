@@ -1,4 +1,4 @@
-import { IFicha } from '@global/models/interfaces';
+import { IFicha } from '@global/models/ag_ficha';
 import {
   CrearFichaDTO,
   BuscarFichaDTO,

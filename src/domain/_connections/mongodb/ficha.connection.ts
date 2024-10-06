@@ -1,7 +1,6 @@
 import { Schema, model, Document } from 'mongoose';
 import { constants } from '@global/configs/constants';
-import { TDatosFormulario, TFichaEstado } from '@global/models/types';
-import { IFicha } from '@global/models/interfaces';
+import { TDatosFormulario, TFichaEstado, IFicha } from '@global/models/ag_ficha';
 
 // Definir la interfaz para el documento
 interface IFichaMongoose extends Document, Omit<IFicha, '_id'> {};

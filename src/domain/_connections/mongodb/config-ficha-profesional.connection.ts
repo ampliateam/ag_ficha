@@ -1,7 +1,6 @@
 import { Schema, model, Document } from 'mongoose';
 import { constants } from '@global/configs/constants';
-import { IConfigFichaProfesional } from '@global/models/interfaces';
-import { TFichaDatosFormularioTipo } from '@global/models/types';
+import { IConfigFichaProfesional, TFichaDatosFormularioTipo } from '@global/models/ag_ficha';
 
 // Definir la interfaz para el documento
 interface IConfigFichaProfesionalMongoose extends Document, Omit<IConfigFichaProfesional, '_id'> {};

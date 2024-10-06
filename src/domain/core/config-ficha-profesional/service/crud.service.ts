@@ -1,4 +1,4 @@
-import { IConfigFichaProfesional } from '@global/models/interfaces';
+import { IConfigFichaProfesional } from '@global/models/ag_ficha';
 import {
   CrearConfigFichaProfesionalDTO,
   BuscarConfigFichaProfesionalDTO,
