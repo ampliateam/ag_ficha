@@ -1,6 +1,7 @@
 ## Valores del .env
 ```
 ID_DEV_AMPLIA=NNNNNNNPP
+BASE_URL_AG_USUARIO=http://localhost:7000
 CODIGO_USUARIO_EXTERNO=ag_ficha
 CONTRASENA_USUARIO_EXTERNO=ag_ficha_123
 DOCKER_CONTAINER_NAME=ag_ficha_local
