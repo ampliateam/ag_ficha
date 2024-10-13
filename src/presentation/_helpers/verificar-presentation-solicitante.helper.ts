@@ -12,7 +12,7 @@ export const verificarPresentationSolicitante = async (psTipo: TPresentationSoli
   // Verificacion para caso de cliente desconocido
   if (psTipo === 'persona') {
     const { token } = dataAuth;
-    
+
     // Verificaciones para caso de cliente persona/externo
     if (!token) {
       throw generarErrorCapaPresentation({
@@ -26,7 +26,8 @@ export const verificarPresentationSolicitante = async (psTipo: TPresentationSoli
 
     // Verificar firma del `usuario-persona`
     const result = await services.extern.ag_usuario.verificarUsuarioPersona({
-      token
+      tipo: psTipo,
+      persona: { token },
     });
 
     respuesta.autenticacionPersona = result.persona.autenticacion;
@@ -43,12 +44,15 @@ export const verificarPresentationSolicitante = async (psTipo: TPresentationSoli
         resultado: null,
       });
     }
-
+    
     // Verificar firma del `usuario-externo`
     const result = await services.extern.ag_usuario.verificarUsuarioExterno({
-      publicKey,
-      timestamp,
-      signature,
+      tipo: psTipo,
+      externo: {
+        publicKey,
+        timestamp,
+        signature,
+      }
     });
 
     respuesta.autenticacionExterno = result.externo.autenticacion;

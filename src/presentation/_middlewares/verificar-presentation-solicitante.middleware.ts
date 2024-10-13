@@ -49,6 +49,8 @@ export const mwVerificarPS = (config: IConfigVerificarPresentationSolicitante = 
         dataAuth.token = idToken;        
       }
 
+      
+
       // Verificar TSP
       if (!config.tps.includes(tipoPS)) {
         throw generarErrorCapaPresentation({

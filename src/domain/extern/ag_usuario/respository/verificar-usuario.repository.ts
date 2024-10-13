@@ -1,17 +1,17 @@
 import { manejadorDeErrorAgendalia } from "@domain/_errors";
-import { VerificarUsuarioPersonaDTO, VerificarUsuarioExternoDTO } from "../dto";
 import * as axios from "@domain/_connections/axios";
 import { IAutenticacionExterno, IAutenticacionPersona, IUsuario } from "@global/models/ag_usuario";
+import { ICredencialUsuario } from "@global/models/_system";
+import { formatearCredencialesHeaders } from "@domain/_helpers";
 
 // Referenciar el manejador de error correspondiente
 const manejadorDeError = manejadorDeErrorAgendalia;
 
-export const verificarUsuarioPersona = async (dto: VerificarUsuarioPersonaDTO) => {
+export const verificarUsuarioPersona = async (cu: ICredencialUsuario) => {
   try {
-    const { token } = dto;
-
+    const credencialHeaders = formatearCredencialesHeaders(cu);
     const response = await axios.ag_usuario.post('/auth/verificar-persona', {}, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { ...credencialHeaders }
     });
 
     return {
@@ -27,16 +27,11 @@ export const verificarUsuarioPersona = async (dto: VerificarUsuarioPersonaDTO) =
   }
 };
 
-export const verificarUsuarioExterno = async (dto: VerificarUsuarioExternoDTO) => {
+export const verificarUsuarioExterno = async (cu: ICredencialUsuario) => {
   try {
-    const { publicKey, timestamp, signature } = dto;
-
+    const credencialHeaders = formatearCredencialesHeaders(cu);
     const response = await axios.ag_usuario.post('/auth/verificar-externo', {}, {
-      headers: {
-        'X-Public-Key': publicKey,
-        'X-Timestamp': timestamp,
-        'X-Signature': signature,
-      }
+      headers: { ...credencialHeaders }
     });
 
     return {
@@ -52,7 +47,6 @@ export const verificarUsuarioExterno = async (dto: VerificarUsuarioExternoDTO) =
       }
     };
   } catch (error) {
-    console.log(error);
     return manejadorDeError(error);
   }
 };
