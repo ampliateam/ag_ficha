@@ -1,8 +1,8 @@
-import { TPresentationSolicitanteTipo } from '@presentation/_models/types';
 import { generarErrorCapaPresentation } from '../_errors';
 import { services } from '@domain/services';
+import { ICredencialUsuario } from '@global/models/_system';
 
-export const verificarPresentationSolicitante = async (psTipo: TPresentationSolicitanteTipo, dataAuth: any) => {
+export const verificarPresentationSolicitante = async (cu: ICredencialUsuario) => {
   const respuesta = {
     usuario: null,
     autenticacionPersona: null,
@@ -10,9 +10,9 @@ export const verificarPresentationSolicitante = async (psTipo: TPresentationSoli
   };
 
   // Verificacion para caso de cliente desconocido
-  if (psTipo === 'persona') {
-    const { token } = dataAuth;
-
+  if (cu.tipo === 'persona') {
+    const { token } = cu.persona;
+    
     // Verificaciones para caso de cliente persona/externo
     if (!token) {
       throw generarErrorCapaPresentation({
@@ -25,15 +25,23 @@ export const verificarPresentationSolicitante = async (psTipo: TPresentationSoli
     }
 
     // Verificar firma del `usuario-persona`
-    const result = await services.extern.ag_usuario.verificarUsuarioPersona({
-      tipo: psTipo,
-      persona: { token },
-    });
+    const result = await services.extern.ag_usuario.verificarUsuarioPersona(cu);
 
-    respuesta.autenticacionPersona = result.persona.autenticacion;
+    respuesta.autenticacionPersona = result.autenticacionPersona;
     respuesta.usuario = result.usuario;
-  } else if (psTipo === 'externo') {
-    const { publicKey, timestamp, signature } = dataAuth;
+  } else if (cu.tipo === 'externo') {
+    const { publicKey, timestamp, signature } = cu.externo;
+
+    // Verificaciones para caso de cliente persona/externo
+    if (!publicKey || !timestamp || !signature) {
+      throw generarErrorCapaPresentation({
+        estado: 401,
+        codigo: 'no_autorizado',
+        mensajeServidor: `Se requiere publicKey, timestamp y signature para realizar la operación.`,
+        mensajeCliente: `Se requieren las credenciales de externo para realizar la operación.`,
+        resultado: null,
+      });
+    }
 
     if (timestamp >= Date.now()) {
       throw generarErrorCapaPresentation({
@@ -44,18 +52,11 @@ export const verificarPresentationSolicitante = async (psTipo: TPresentationSoli
         resultado: null,
       });
     }
-    
-    // Verificar firma del `usuario-externo`
-    const result = await services.extern.ag_usuario.verificarUsuarioExterno({
-      tipo: psTipo,
-      externo: {
-        publicKey,
-        timestamp,
-        signature,
-      }
-    });
 
-    respuesta.autenticacionExterno = result.externo.autenticacion;
+    // Verificar firma del `usuario-externo`
+    const result = await services.extern.ag_usuario.verificarUsuarioExterno(cu);
+
+    respuesta.autenticacionExterno = result.autenticacionExterno;
     respuesta.usuario = result.usuario;
   }
 

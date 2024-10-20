@@ -14,13 +14,11 @@ export const verificarUsuarioPersona = async (cu: ICredencialUsuario) => {
       headers: { ...credencialHeaders }
     });
 
+    const ps = response.data.resultado;
     return {
-      tipo: response.data.resultado.tipo as string,
-      usuario: response.data.resultado.usuario as IUsuario,
-      persona: {
-        autenticacion: response.data.resultado.persona.autenticacion as IAutenticacionPersona,
-        token: response.data.resultado.persona.token as string,
-      }
+      cu: ps.cu as ICredencialUsuario,
+      usuario: ps.usuario as IUsuario,
+      autenticacionPersona: ps.autenticacionPersona as IAutenticacionPersona,
     };
   } catch (error) {
     return manejadorDeError(error);
@@ -34,17 +32,11 @@ export const verificarUsuarioExterno = async (cu: ICredencialUsuario) => {
       headers: { ...credencialHeaders }
     });
 
+    const ps = response.data.resultado;
     return {
-      tipo: response.data.resultado.tipo as string,
-      usuario: response.data.resultado.usuario as IUsuario,
-      externo: {
-        autenticacion: response.data.resultado.externo.autenticacion as IAutenticacionExterno,
-        identificacion: {
-          publicKey: response.data.resultado.externo.identificacion.publicKey as string,
-          timestamp: response.data.resultado.externo.identificacion.timestamp as number,
-          signature: response.data.resultado.externo.identificacion.signature as string,
-        },
-      }
+      cu: ps.cu as ICredencialUsuario,
+      usuario: ps.usuario as IUsuario,
+      autenticacionExterno: ps.autenticacionExterno as IAutenticacionExterno,
     };
   } catch (error) {
     return manejadorDeError(error);
